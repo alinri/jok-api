@@ -9,10 +9,10 @@ from marshmallow import fields
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
-    f'mysql+mysqldb://{os.environ["FLASK_DB_USER"]}:+'\
-    f'{parse.quote(os.environ["FLASK_DB_PASSWORD"])}@'\
-    f'{os.environ["FLASK_DB_HOST"]}/'\
-    f'{os.environ["FLASK_DB_NAME"]}'
+    f'mysql+mysqldb://{os.getenv("FLASK_DB_USER")}:'\
+    f'{parse.quote(os.getenv("FLASK_DB_PASSWORD"))}@'\
+    f'{os.getenv("FLASK_DB_HOST")}/'\
+    f'{os.getenv("FLASK_DB_NAME")}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
