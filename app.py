@@ -64,8 +64,12 @@ categories_schema = CategorySchema(many=True)
 
 @app.route('/random/')
 def random_post():
-    random_offset = int(db.session.query(func.floor(
-        func.max(Post.post_id) * func.rand()).label('post_id')
-        ).scalar())
+    random_offset = db.session.query(
+        func.floor(
+            1 +
+            func.rand() *
+            (func.max(Post.post_id) - 1)
+        )
+    ).scalar()
     post = Post.query.filter(Post.post_id >= random_offset).limit(1).first()
     return post_schema.dump(post)
