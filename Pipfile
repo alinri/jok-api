@@ -10,6 +10,7 @@ flask-sqlalchemy = "*"
 mysqlclient = "*"
 marshmallow-sqlalchemy = "*"
 flask-marshmallow = "*"
+flask-cors = "*"
 
 [dev-packages]
 
