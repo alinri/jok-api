@@ -1,12 +1,12 @@
 import os
-import secrets
 from urllib import parse
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, ForeignKey, func, select
+from sqlalchemy import Column, Integer, String, ForeignKey, func
 from sqlalchemy.orm import relationship
 from flask_marshmallow import Marshmallow
 from marshmallow import fields
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
@@ -18,7 +18,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-
+CORS(app)
 
 class Post(db.Model):
     __tablename__ = 'post'
