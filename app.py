@@ -1,8 +1,9 @@
 import os
+import secrets
 from urllib import parse
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, ForeignKey, func
+from sqlalchemy import Column, Integer, String, ForeignKey, func, select
 from sqlalchemy.orm import relationship
 from flask_marshmallow import Marshmallow
 from marshmallow import fields
@@ -63,6 +64,8 @@ categories_schema = CategorySchema(many=True)
 
 @app.route('/random/')
 def random_post():
-    post = Post.query.order_by(func.rand()).limit(1).first()
-
+    random_offset = int(db.session.query(func.floor(
+        func.max(Post.post_id) * func.rand()).label('post_id')
+        ).scalar())
+    post = Post.query.filter(Post.post_id >= random_offset).limit(1).first()
     return post_schema.dump(post)
